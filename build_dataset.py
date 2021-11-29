@@ -36,7 +36,7 @@ class SegyDataset(Dataset):
             startdep = random.sample(range(self.seisdepth-self.imgsize), 1)[0]
             image = randline.T[startdep:startdep+self.imgsize,:].astype(np.float32)
             np.random.shuffle(image)
-            label = torch.tensor([0])
+            label = torch.tensor(0)
         else:
             # Return seismic
             ilnum = self.idx_nums[idx//2]
@@ -45,7 +45,7 @@ class SegyDataset(Dataset):
             startdep = random.sample(range(self.seisdepth-self.imgsize), 1)[0]
             startx = random.sample(range(len(trnums)-self.imgsize), 1)[0]
             image = seisline.T[startdep:startdep+self.imgsize, startx:startx+self.imgsize].astype(np.float32)
-            label = torch.tensor([1])
+            label = torch.tensor(1)
         image = (image - np.mean(image)) / np.std(image)
         image = np.expand_dims(image, axis=0)
         return torch.from_numpy(image), label
